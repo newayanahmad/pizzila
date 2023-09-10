@@ -1,0 +1,27 @@
+.footer {
+    background-color: #000;
+    color: #fff;
+    padding: 2rem 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    text-align: center;
+}
+
+.socials {
+    margin-top: 1rem;
+}
+
+.socials a {
+    color: #fff;
+    margin: 0 1rem;
+}
+
+.container p:last-of-type {
+    border-top: .5px solid wheat;
+    margin-top: 10px;
+    padding-top: 5px;
+    font-size: medium;
+}

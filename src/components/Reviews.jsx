@@ -23,21 +23,6 @@ const reviews = [
         comment: 'The best pizza in town! The crust is just perfect. 🍕👌',
     },
     {
-        name: 'Charlie Brown',
-        rating: 5,
-        comment: 'Amazing! The toppings were fresh and plentiful. Will order again soon. 🍅🧀🍄🥦',
-    },
-    {
-        name: 'Eva Green',
-        rating: 5,
-        comment: 'Fast delivery and hot pizza, just the way I like it. Highly recommended! 🍕💨🔥',
-    },
-    {
-        name: 'Frank Sinatra',
-        rating: 4.5,
-        comment: 'Good pizza, but I wish there were more vegetarian options. 🍕🥦🥕',
-    },
-    {
         name: 'Grace Hopper',
         rating: 5,
         comment: 'Excellent pizza! The sauce is to die for. 🍕😋',
