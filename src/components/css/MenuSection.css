@@ -1,0 +1,101 @@
+.menu {
+    padding: 2rem 0;
+    background-color: #000;
+    color: white;
+}
+
+.menu-container {
+    max-width: 70%;
+    margin: auto;
+}
+
+.menu h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.pizzas {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.pizza {
+    width: calc(33% - 2rem);
+    margin: 1rem;
+}
+
+.pizza img {
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.pizza img:hover {
+    scale: 1.005;
+    box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
+    -webkit-box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
+    -moz-box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
+
+}
+
+/* ... (rest of the CSS code) */
+
+.pizza div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.pizza-info {
+    flex-direction: column;
+    align-items: start !important;
+}
+
+.add-button {
+    background-color: #fff;
+    /* White */
+    border: none;
+    color: #000;
+    /* Black */
+    padding: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-button:hover {
+    background-color: #eee;
+    /* Light gray */
+}
+
+
+
+
+
+@media (max-width: 1200px) {
+    .pizza {
+        flex: .33 0 31%;
+        /* The value 31% will create a 3-column layout for medium screens */
+    }
+}
+
+/* @media (max-width: 00px) {
+    .pizza {
+        flex: .5 0 46%;
+        /* The value 46% will create a 2-column layout for small screens */
+/* } */
+/* } */
+
+@media (max-width: 600px) {
+    .menu-container {
+        max-width: 90%;
+    }
+
+    .pizza {
+        flex: 1 0 100%;
+        /* The value 100% will create a single-column layout for extra small screens */
+    }
+}
