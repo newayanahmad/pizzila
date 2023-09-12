@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from './Pages/HomePage'
 import Cart from './Pages/Cart';
 import Navbar from './components/Navbar';
+import Register from './Pages/Register';
+import Login from './Pages/Login';
 
 const App = () => {
   const [cart, setCart] = useState([
@@ -20,13 +22,24 @@ const App = () => {
   };
   return (
     <BrowserRouter>
-      <Navbar />
+      <Nav />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='cart' element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
+        <Route path='register' element={<Register />} />
+        <Route path='login' element={<Login />} />
       </Routes>
     </BrowserRouter>
   )
+}
+
+const Nav = () => {
+  const location = useLocation()
+  console.log(location.pathname);
+  if (location.pathname == '/register' || location.pathname == '/login') {
+    return (<></>)
+  }
+  return <Navbar />
 }
 
 export default App

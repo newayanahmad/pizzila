@@ -1,0 +1,137 @@
+.registration-container {
+    position: fixed;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-image: url("bg2.jpeg");
+    background-size: cover;
+    background-position: right;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-form {
+    width: 30%;
+    margin-top: -20px;
+    border: 1px solid rgba(255, 255, 255, .25);
+    /* border-radius: 5px; */
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
+
+    backdrop-filter: blur(15px);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+form p {
+    font-size: x-large;
+    margin: auto;
+    font-weight: bold;
+
+}
+
+input:focus {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.error {
+    color: #f00;
+    stroke: black;
+    stroke-width: 1px;
+    margin: auto 10px;
+    font-size: small;
+}
+
+input {
+    color: black;
+    outline: none;
+    margin: 10px;
+    padding: 10px 15px;
+    border-bottom: 1px solid wheat;
+    border-top: 1px solid wheat;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.462);
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+
+}
+
+input::placeholder {
+    color: rgb(0, 0, 0, 0.75);
+}
+
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+/* For Chrome, Safari, Edge, Opera */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=submit] {
+    color: white;
+    background-color: black;
+}
+
+form span {
+    color: wheat;
+    margin: auto;
+    font-size: smaller;
+}
+
+form div span {
+    margin: auto 10px;
+}
+
+form div:nth-child(2) a {
+    color: blueviolet;
+}
+
+form div {
+    display: flex;
+    justify-content: space-between;
+}
+
+form span a {
+    /* text-decoration: none; */
+    color: greenyellow;
+}
+
+form span:nth-child(2) a {
+    /* text-decoration: none; */
+    color: greenyellow;
+}
+
+@media(max-width:1200px) {
+    .register-form {
+        width: 40%;
+    }
+}
+
+@media(max-width:900px) {
+    .register-form {
+        width: 50%;
+    }
+
+    form span {
+        font-size: small;
+    }
+}
+
+@media(max-width:600px) {
+    .register-form {
+        width: 90%;
+    }
+
+
+}

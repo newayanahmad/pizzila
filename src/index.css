@@ -30,6 +30,7 @@
   padding: 10px 20px;
   list-style: none;
   color: wheat;
+  cursor: pointer;
 }
 
 
@@ -46,6 +47,20 @@
   cursor: pointer;
   display: none;
 }
+
+ul li:nth-child(4) a {
+  text-decoration: none;
+  color: black;
+}
+
+ul li:nth-child(4) {
+  padding: 5px 20px;
+  background-color: white;
+  border-radius: 30px;
+  margin: 5px auto;
+  color: black;
+}
+
 
 @media (max-width:600px) {
   .close {
@@ -88,10 +103,7 @@
     border-bottom: 1px solid wheat; */
   }
 
-  ul li:nth-child(4) {
-    background-color: white;
-    color: black;
-  }
+
 
   .cross {
     user-select: none;
