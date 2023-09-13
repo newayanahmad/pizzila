@@ -35,7 +35,6 @@ const App = () => {
 
 const Nav = () => {
   const location = useLocation()
-  console.log(location.pathname);
   if (location.pathname == '/register' || location.pathname == '/login') {
     return (<></>)
   }

@@ -26,8 +26,6 @@ const Navbar = () => {
         checkUser()
     }, [])
     const closeSidebar = () => {
-        console.log('clicked');
-
         navRef.current.classList.remove('open')
         navRef.current.classList.add('close')
         setNavOpen((value) => setNavOpen(!value))

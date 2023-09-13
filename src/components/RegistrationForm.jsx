@@ -47,13 +47,6 @@ const RegistrationForm = () => {
             setError("Passwords do not match");
             return false;
         }
-
-        console.log(JSON.stringify({
-            name: name,
-            password: password,
-            email: email
-        }));
-
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/register`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -64,7 +57,6 @@ const RegistrationForm = () => {
             })
         })
         const data = await res.json()
-        console.log(data);
         if (data.success == false) {
             setError(data.message)
         }
