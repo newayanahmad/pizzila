@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { BiArrowBack } from "react-icons/bi"
+
 import './css/RegistrationForm.css'
-const OTPVerification = ({ email }) => {
+const OTPVerification = ({ email, back }) => {
     const [OTP, setOTP] = useState('')
     const [error, setError] = useState("")
 
@@ -37,7 +39,10 @@ const OTPVerification = ({ email }) => {
         <div className="registration-container">
             <div className="register-form">
                 <form action="" onSubmit={handleSubmit} >
-                    <p>Verify Email</p>
+                    <div>
+                        <BiArrowBack onClick={back} className='backbutton' />
+                        <p>Verify Email</p>
+                    </div>
                     <input type="number" value={OTP} onChange={handleChange} name="otp" id="otp" placeholder='Enter OTP' />
                     <span className='error'>{error}</span>
                     <input type="submit" value="Verify Email" />

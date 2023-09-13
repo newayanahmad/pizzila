@@ -28,6 +28,10 @@ const RegistrationForm = () => {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
     const [isRegistered, setIsRegistered] = useState(false)
+
+    const back = () => {
+        setIsRegistered(false)
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (name === "" || email === "" || password === "" || confirmPassword === "") {
@@ -72,7 +76,7 @@ const RegistrationForm = () => {
         else if (e.target.name == 'email') setEmail(e.target.value)
     }
     return (<>
-        {isRegistered ? <OTPVerification email={email} /> :
+        {isRegistered ? <OTPVerification email={email} back={back} /> :
             <div className="registration-container">
                 <div className="register-form">
                     <form action="" onSubmit={handleSubmit}>

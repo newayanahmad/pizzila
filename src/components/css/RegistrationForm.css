@@ -21,6 +21,15 @@
     backdrop-filter: blur(15px);
 }
 
+
+.backbutton {
+    font-size: x-large;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -80,6 +89,7 @@ input[type='number']::-webkit-outer-spin-button {
 
 input[type=submit] {
     color: white;
+    cursor: pointer;
     background-color: black;
 }
 

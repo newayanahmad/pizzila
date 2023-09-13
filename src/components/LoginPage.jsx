@@ -11,6 +11,10 @@ const LoginPage = () => {
 
     const navigation = useNavigate()
 
+    const back = () => {
+        setIsVerified(true)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (email === "" || password === "") {
@@ -67,7 +71,7 @@ const LoginPage = () => {
                         </form>
                     </div >
                 </div >
-                : <OTPVerification email={email} />
+                : <OTPVerification email={email} back={back} />
         }
     </>
     )
