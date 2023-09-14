@@ -5,6 +5,7 @@ import Cart from './Pages/Cart';
 import Navbar from './components/Navbar';
 import Register from './Pages/Register';
 import Login from './Pages/Login';
+import ForgetPassword from './components/ForgetPassword';
 
 const App = () => {
   const [cart, setCart] = useState([
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='cart' element={<Cart cart={cart} updateQuantity={updateQuantity} />} />
         <Route path='register' element={<Register />} />
         <Route path='login' element={<Login />} />
+        <Route path='reset-password' element={<ForgetPassword />} />
       </Routes>
     </BrowserRouter>
   )
@@ -35,7 +37,7 @@ const App = () => {
 
 const Nav = () => {
   const location = useLocation()
-  if (location.pathname == '/register' || location.pathname == '/login') {
+  if (location.pathname == '/register' || location.pathname == '/login' || location.pathname == '/reset-password') {
     return (<></>)
   }
   return <Navbar />

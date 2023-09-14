@@ -43,6 +43,7 @@ const OTPVerification = ({ email, back }) => {
                         <BiArrowBack onClick={back} className='backbutton' />
                         <p>Verify Email</p>
                     </div>
+                    <span className='opt-message'>Please enter the OTP sent to your email</span>
                     <input type="number" value={OTP} onChange={handleChange} name="otp" id="otp" placeholder='Enter OTP' />
                     <span className='error'>{error}</span>
                     <input type="submit" value="Verify Email" />

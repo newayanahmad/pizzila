@@ -66,7 +66,7 @@ const LoginPage = () => {
                             <div>
 
                                 <span>New User? <Link to="../register">Register</Link></span>
-                                <span><Link to="../register">Forgot Password</Link></span>
+                                <span><Link to="../reset-password">Forgot Password</Link></span>
                             </div>
                         </form>
                     </div >

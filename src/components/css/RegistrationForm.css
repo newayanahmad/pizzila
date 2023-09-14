@@ -11,29 +11,37 @@
 }
 
 .register-form {
+
     width: 30%;
     margin-top: -20px;
     border: 1px solid rgba(255, 255, 255, .25);
     /* border-radius: 5px; */
     background-color: rgba(255, 255, 255, 0.15);
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.25);
-
     backdrop-filter: blur(15px);
 }
 
 
 .backbutton {
     font-size: x-large;
-    margin: 10px;
+    margin: 6px 10px 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
+    position: absolute;
+}
+
+.opt-message {
+    color: white;
+    margin: 10px auto 0 !important
 }
 
 form {
     display: flex;
+    height: max-content;
     flex-direction: column;
     padding: 20px;
+    transition: 1s;
 }
 
 form p {
@@ -56,7 +64,13 @@ input:focus {
     font-size: small;
 }
 
-input {
+.message {
+    margin: 3px 10px;
+    text-align: center;
+}
+
+input,
+button {
     color: black;
     outline: none;
     margin: 10px;
@@ -87,7 +101,8 @@ input[type='number']::-webkit-outer-spin-button {
     margin: 0;
 }
 
-input[type=submit] {
+input[type=submit],
+button {
     color: white;
     cursor: pointer;
     background-color: black;
@@ -112,8 +127,10 @@ form div {
     justify-content: space-between;
 }
 
-form span a {
-    /* text-decoration: none; */
+form span a,
+.resend {
+    cursor: pointer;
+    user-select: none;
     color: greenyellow;
 }
 

@@ -25,6 +25,14 @@ const Navbar = () => {
         }
         checkUser()
     }, [])
+
+    const logout = () => {
+        closeSidebar();
+        if (confirm("Press OK' to confirm logging out, or 'Cancel' to remain logged in.")) {
+            setIsLoggedIn(false);
+            localStorage.removeItem('token')
+        }
+    }
     const closeSidebar = () => {
         navRef.current.classList.remove('open')
         navRef.current.classList.add('close')
@@ -47,14 +55,14 @@ const Navbar = () => {
                 <li><L onClick={closeSidebar} to='home' smooth={true} duration={200}>Home</L></li>
                 <li ><L onClick={closeSidebar} to='about' smooth={true} duration={200}>About</L></li>
                 <li onClick={closeSidebar}><L to='#contact'>Contact Us</L></li>
-                {isLoggedIn ? <li onClick={() => { closeSidebar(); setIsLoggedIn(false); localStorage.removeItem('token') }} >Logout</li> :
-                    <li onClick={closeSidebar}><Link className='signin' to='register'>Sign In</Link></li>
+                {isLoggedIn ? <li onClick={logout} >Logout</li> :
+                    <li onClick={closeSidebar}><Link className='signin' to='login'>Sign In</Link></li>
                 }
                 <RxCross2 onClick={closeSidebar} className='cross' />
             </ul>
             <Link to='cart'>
-
-                <BsBagCheckFill className='shoppingBag' />
+                {isLoggedIn ?
+                    <BsBagCheckFill className='shoppingBag' /> : <></>}
             </Link>
         </nav>
     )
