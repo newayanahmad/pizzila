@@ -1,30 +1,16 @@
-import React, { createRef, useLayoutEffect, useState } from 'react'
+import React, { createRef, useState, useContext } from 'react'
 import { RxCross2, RxHamburgerMenu } from 'react-icons/rx'
 import { BsBagCheckFill } from 'react-icons/bs'
 import { Link as L } from 'react-scroll'
 import { Link } from 'react-router-dom'
-
+import AuthContext from '../../context/AuthContext'
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false)
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const navRef = createRef()
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
 
-    useLayoutEffect(() => {
-        const checkUser = async () => {
-            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyuser`, {
-                method: 'POST',
-                headers: {
-                    token: localStorage.getItem('token')
-                }
-            })
-            let result = await res.json()
-            if (result.userValid) {
-                setIsLoggedIn(true)
-            }
-        }
-        checkUser()
-    }, [])
+
 
     const logout = () => {
         closeSidebar();
@@ -46,11 +32,13 @@ const Navbar = () => {
     return (
         <nav className='navbar'>
             <RxHamburgerMenu className='openMenu' onClick={openSidebar} />
-            <div className="logo" >
+            <Link to={"/"}>
+                <div className="logo" >
 
-                <img src={"logo.png"} alt="" width={50} />
-                <p>PIZZILA</p>
-            </div>
+                    <img src={"logo.png"} alt="" width={50} />
+                    <p>PIZZILA</p>
+                </div>
+            </Link>
             <ul ref={navRef}>
                 <li><L onClick={closeSidebar} to='home' smooth={true} duration={200}>Home</L></li>
                 <li ><L onClick={closeSidebar} to='about' smooth={true} duration={200}>About</L></li>

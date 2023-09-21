@@ -1,25 +1,18 @@
-import React, { useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import './css/RegistrationForm.css'
 import OTPVerification from './OTPVerification'
+import AuthContext from '../../context/AuthContext'
 
 
 const RegistrationForm = () => {
+
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
     const navigation = useNavigate()
     useLayoutEffect(() => {
-        const checkUser = async () => {
-            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyuser`, {
-                method: 'POST',
-                headers: {
-                    token: localStorage.getItem('token')
-                }
-            })
-            let result = await res.json()
-            if (result.userValid) {
-                navigation("/")
-            }
+        if (isLoggedIn) {
+            navigation("/")
         }
-        checkUser()
     }, [])
 
     const [name, setName] = useState('')

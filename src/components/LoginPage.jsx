@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './css/RegistrationForm.css'
 import OTPVerification from "./OTPVerification"
 import { Link, useNavigate } from 'react-router-dom'
+import AuthContext from '../../context/AuthContext'
 
 const LoginPage = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
     const [isVerified, setIsVerified] = useState(true)
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
+
+
 
     const navigation = useNavigate()
 
@@ -37,6 +41,7 @@ const LoginPage = () => {
             if (result.verified) {
                 localStorage.setItem('token', result.token)
                 setIsVerified(true)
+                setIsLoggedIn(true)
                 navigation("/")
             }
             else {

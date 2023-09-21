@@ -37,17 +37,13 @@
     box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
     -webkit-box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
     -moz-box-shadow: -10px -15px 52px -20px rgba(255, 255, 255, 0.81);
-
 }
-
-/* ... (rest of the CSS code) */
 
 .pizza div {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 
 .pizza-info {
     flex-direction: column;
@@ -71,23 +67,17 @@
     /* Light gray */
 }
 
-
-
-
-
 @media (max-width: 1200px) {
     .pizza {
-        flex: .33 0 31%;
-        /* The value 31% will create a 3-column layout for medium screens */
+        flex-basis: calc(50% - 2rem);
+        /* The value of '50%' will create a two-column layout for medium screens */
+        max-width: calc(50% - 2rem);
+        box-sizing: border-box;
+        /* To include padding and border in element's total width and height */
+        margin-bottom: 1rem;
+        /* To give vertical space between the pizzas */
     }
 }
-
-/* @media (max-width: 00px) {
-    .pizza {
-        flex: .5 0 46%;
-        /* The value 46% will create a 2-column layout for small screens */
-/* } */
-/* } */
 
 @media (max-width: 600px) {
     .menu-container {
@@ -95,7 +85,94 @@
     }
 
     .pizza {
-        flex: 1 0 100%;
-        /* The value 100% will create a single-column layout for extra small screens */
+        flex-basis: 100%;
+        /* The value of '100%' will create a single-column layout for extra small screens */
+        max-width: 100%;
+    }
+}
+
+
+.read-more {
+    color: white;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .modal h2 {
+        font-size: 1.2rem;
+    }
+
+    .modal p {
+        font-size: 0.8rem;
+    }
+}
+
+
+/* Add these styles at the end of your CSS file */
+
+.cart-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: 100%;
+    /* padding: 10px; */
+    padding-bottom: 10px;
+    box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.cart-info {
+    white-space: nowrap;
+    background-color: black;
+    padding: 10px;
+    border-radius: 10px;
+    border: .05px solid wheat;
+    margin: auto;
+    display: flex;
+    align-items: center;
+}
+
+.cart-info p {
+    /* margin: 0; */
+    /* font-size: 1rem; */
+    margin-right: 20px;
+}
+
+.proceed-to-cart-button {
+    padding: 10px 20px;
+    background-color: #ff5722;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.proceed-to-cart-button:hover {
+    background-color: #f44336;
+}
+
+@media (max-width: 768px) {
+    .cart-bar {
+        /* padding: 10px 20px; */
+    }
+
+    .cart-info {
+        margin-left: auto;
+        align-items: center;
+    }
+
+    .cart-info p {
+        font-size: smaller;
+    }
+
+    .proceed-to-cart-button {
+        font-size: smaller;
     }
 }
