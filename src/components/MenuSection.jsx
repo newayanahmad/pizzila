@@ -53,7 +53,6 @@ const MenuSection = () => {
                 body: JSON.stringify({ cart: [...cart, { ...pizza, quantity: 1 }] })
             });
         }
-        console.log('new cart', cart);
         setShowCart(true);
     };
 

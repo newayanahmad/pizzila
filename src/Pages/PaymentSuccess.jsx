@@ -10,7 +10,6 @@ const PaymentSuccess = () => {
         const checkStatus = async () => {
             const intent = queryParameters.get('payment_intent')
             const orderID = queryParameters.get('order_id')
-            console.log(intent, orderID);
             const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-payment-status`, {
                 method: 'POST',
                 headers: { 'content-type': 'application/json', user: localStorage.getItem('token') },
@@ -20,8 +19,8 @@ const PaymentSuccess = () => {
             if (response.success) {
                 setMessage("Your order was succesfully placed. You are being redirected to orders page...")
                 setTimeout(() => {
-                    navigation('../dashboard')
-                }, 2000)
+                    navigation('../dashboard/orders')
+                }, 1000)
             }
 
         }

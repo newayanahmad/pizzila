@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../components/css/UserDashboard.css';
 import { GiFullPizza } from 'react-icons/gi'
 import { FaUserAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../context/AuthContext';
 
 function Orders() {
     const navigation = useNavigate()
@@ -47,7 +48,23 @@ function Orders() {
 
 function OrdersComponent() {
     const navigation = useNavigate()
+    const [isLoggedIn] = useContext(AuthContext)
     const [user, setUser] = useState({})
+
+
+    useEffect(() => {
+        const checkUser = async () => {
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyuser`, {
+                method: 'POST',
+                headers: { token: localStorage.getItem('token') }
+            })
+            let result = await res.json()
+            if (!result.userValid) {
+                navigation('../login')
+            }
+        }
+        checkUser()
+    }, [isLoggedIn])
 
     useEffect(() => {
         document.title = 'Orders | Pizzila'
@@ -58,7 +75,6 @@ function OrdersComponent() {
             })
             const data = await r.json()
             setUser(data)
-            console.log(data)
         }
         fetchUser()
     }, [])

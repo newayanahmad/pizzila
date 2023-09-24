@@ -37,7 +37,7 @@ const Cart = () => {
             if (r.success) {
                 setCart(r.cartItems)
                 let a = r.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0)
-                console.log(a);
+
                 setTotal(a)
                 if (a >= 500) {
                     setSubtotal(a + a * 0.08)

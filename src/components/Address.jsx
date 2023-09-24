@@ -24,8 +24,6 @@ const CheckoutForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(address);
-        console.log(cart);
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/place-order`, {
             method: 'POST',
             headers: { user: localStorage.getItem('token'), 'content-type': 'application/json' },

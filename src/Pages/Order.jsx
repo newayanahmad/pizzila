@@ -1,12 +1,29 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import "../components/css/Order.css"
+import AuthContext from '../../context/AuthContext'
 
 const Order = () => {
     const [orderId, setOrderID] = useState("")
     const [order, setOrder] = useState(null)
     const { orderID } = useParams()
+    const [isLoggedIn] = useContext(AuthContext)
+    const navigation = useNavigate()
 
+
+    useEffect(() => {
+        const checkUser = async () => {
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyuser`, {
+                method: 'POST',
+                headers: { token: localStorage.getItem('token') }
+            })
+            let result = await res.json()
+            if (!result.userValid) {
+                navigation('../login')
+            }
+        }
+        checkUser()
+    }, [isLoggedIn])
     useLayoutEffect(() => {
         setOrderID(orderID)
         const fetchOrder = async () => {
