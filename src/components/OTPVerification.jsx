@@ -6,6 +6,7 @@ import './css/RegistrationForm.css'
 const OTPVerification = ({ email, back }) => {
     const [OTP, setOTP] = useState('')
     const [error, setError] = useState("")
+    const [message, setMessage] = useState("Please enter the OTP sent to your email")
 
     const navigation = useNavigate()
     const handleChange = (e) => {
@@ -35,6 +36,21 @@ const OTPVerification = ({ email, back }) => {
         }
         setError(result.message)
     }
+    const resendOTP = async () => {
+        let result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/resendotp`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        })
+        let data = await result.json()
+        if (data.success) {
+            setMessage("New OTP has been sent to your email")
+            return;
+        }
+        setError(data.message)
+        return;
+
+    }
     return (
         <div className="registration-container">
             <div className="register-form">
@@ -43,9 +59,10 @@ const OTPVerification = ({ email, back }) => {
                         <BiArrowBack onClick={back} className='backbutton' />
                         <p>Verify Email</p>
                     </div>
-                    <span className='opt-message'>Please enter the OTP sent to your email</span>
+                    <span className='opt-message'>{message}</span>
                     <input type="number" value={OTP} onChange={handleChange} name="otp" id="otp" placeholder='Enter OTP' />
                     <span className='error'>{error}</span>
+                    <span className='resend' onClick={resendOTP}>Resend OTP</span>
                     <input type="submit" value="Verify Email" />
                 </form>
             </div>
