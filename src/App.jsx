@@ -1,23 +1,27 @@
-import React, { useState, lazy, Suspense, useLayoutEffect } from 'react'
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import React, { useState, lazy, Suspense, useLayoutEffect, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
 import SubtotalContext from "../context/SubtotalContext"
 import OrderIDContext from '../context/OrderIDContext';
-const HomePage = lazy(() => import('./Pages/HomePage'));
-const Cart = lazy(() => import('./Pages/Cart'));
-const Navbar = lazy(() => import('./components/Navbar'));
-const Register = lazy(() => import('./Pages/Register'));
-const Login = lazy(() => import('./Pages/Login'));
-const ForgetPassword = lazy(() => import('./components/ForgetPassword'));
-const AdminLoginPage = lazy(() => import('./components/AdminLoginPage'));
-const Address = lazy(() => import('./components/Address'));
-const Payment = lazy(() => import('./Pages/Payment'));
-const PaymentSuccess = lazy(() => import('./Pages/PaymentSuccess'));
+// changing all the above lazy import to normal imports
+import HomePage from './Pages/HomePage'
+import Cart from './Pages/Cart'
+import Navbar from './components/Navbar'
+import Register from './Pages/Register'
+import Login from './Pages/Login'
+import ForgetPassword from './components/ForgetPassword'
+import AdminLoginPage from './components/AdminLoginPage'
+import Address from './components/Address'
+const Payment = lazy(() => import('./Pages/Payment'))
+const PaymentSuccess = lazy(() => import('./Pages/PaymentSuccess'))
+import OrdersComponent from './Pages/Orders';
+
 import CartContext from '../context/CartContext'
+import UserProfile from './Pages/UserProfile';
+import Order from './Pages/Order';
 
 
 const App = () => {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   // ... your existing code ...
   const [cart, setCart] = useState([]);
@@ -40,11 +44,14 @@ const App = () => {
         if (r.success) {
           setCart(r.cartItems)
         }
+        else {
+          setCart([]);
+        }
         setIsLoggedIn(true)
       }
     }
     checkUser()
-  }, [])
+  }, [isLoggedIn])
 
   return (
     <BrowserRouter>
@@ -63,6 +70,10 @@ const App = () => {
                   <Route path='address' element={<Address />} />
                   <Route path='payment' element={<Payment />} />
                   <Route path='success' element={<PaymentSuccess />} />
+                  <Route path="dashboard" element={<DashBoard />} />
+                  <Route path='dashboard/orders' element={<OrdersComponent />} />
+                  <Route path='dashboard/orders/:orderID' element={<Order />} />
+                  <Route path='dashboard/profile' element={<UserProfile />} />
                   <Route path='admin/login' element={<AdminLoginPage />} />
                 </Routes>
               </Suspense>
@@ -81,5 +92,14 @@ const Nav = () => {
   }
   return <Navbar />
 }
+
+const DashBoard = () => {
+  const navigation = useNavigate()
+  useEffect(() => {
+    navigation('profile')
+  }, [])
+  return <></>
+}
+
 
 export default App

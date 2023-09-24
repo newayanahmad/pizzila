@@ -60,7 +60,7 @@ const CheckoutForm = () => {
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: `https://${window.location.host}/success?order_id=${orderID}`,
+                return_url: `http://${window.location.host}/success?order_id=${orderID}`,
             },
         });
 

@@ -4,6 +4,8 @@ import { BsBagCheckFill } from 'react-icons/bs'
 import { Link as L } from 'react-scroll'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/AuthContext'
+import { FaUserAlt } from 'react-icons/fa'
+import CartContext from '../../context/CartContext'
 
 const Navbar = () => {
     const [navOpen, setNavOpen] = useState(false)
@@ -35,23 +37,30 @@ const Navbar = () => {
             <Link to={"/"}>
                 <div className="logo" >
 
-                    <img src={"logo.png"} alt="" width={50} />
+                    <img src={"/logo.png"} alt="" width={50} />
                     <p>PIZZILA</p>
                 </div>
             </Link>
             <ul ref={navRef}>
-                <li><L onClick={closeSidebar} to='home' smooth={true} duration={200}>Home</L></li>
-                <li ><L onClick={closeSidebar} to='about' smooth={true} duration={200}>About</L></li>
+                <li><Link to={'/'} onClick={closeSidebar}>Home</Link></li>
+                <li ><L onClick={closeSidebar} to='about' duration={200}>About</L></li>
                 <li onClick={closeSidebar}><L to='#contact'>Contact Us</L></li>
                 {isLoggedIn ? <li onClick={logout} >Logout</li> :
                     <li onClick={closeSidebar}><Link className='signin' to='login'>Sign In</Link></li>
                 }
                 <RxCross2 onClick={closeSidebar} className='cross' />
             </ul>
-            <Link to='cart'>
-                {isLoggedIn ?
-                    <BsBagCheckFill className='shoppingBag' /> : <></>}
-            </Link>
+            <div className="nav-right" >
+
+                {isLoggedIn ? <>
+                    <Link to='cart'>
+                        <BsBagCheckFill className='shoppingBag' />
+                    </Link>
+                    <Link to='/dashboard/profile'>
+                        <FaUserAlt style={{ color: 'wheat', marginLeft: '30px', fontSize: 'larger' }} />
+                    </Link>
+                </> : <></>}
+            </div>
         </nav>
     )
 }

@@ -27,6 +27,7 @@ const Cart = () => {
     const [total, setTotal] = useState(0)
 
     useLayoutEffect(() => {
+        document.title = 'Cart | Pizzila'
         const fetchCartItems = async () => {
             const d = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-cart-items`, {
                 method: 'POST',

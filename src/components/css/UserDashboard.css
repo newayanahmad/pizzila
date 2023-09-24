@@ -1,0 +1,200 @@
+.app {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.121);
+    justify-content: flex-start;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+
+    width: 100%;
+    height: 100%;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    align-items: start;
+    justify-content: start;
+    width: 50%;
+}
+
+.profile-details input {
+    margin-right: 0 !important;
+    width: 100%;
+}
+
+.profile-details label {
+    margin-left: 10px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar {
+    width: max-content;
+    height: 100vh;
+    padding: 50px;
+    background-color: black;
+    background-position: end;
+    box-shadow: 10px 0px 16px -12px rgba(0, 0, 0, 0.76);
+    -webkit-box-shadow: 10px 0px 16px -12px rgba(0, 0, 0, 0.76);
+    -moz-box-shadow: 10px 0px 16px -12px rgba(0, 0, 0, 0.76);
+}
+
+.sidebar-button {
+    background-color: black !important;
+    color: whitesmoke;
+    margin: 15px 0;
+    border: 1px solid white !important;
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    padding-right: 60px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: start;
+    border: none;
+    background-color: #ddd;
+    cursor: pointer;
+}
+
+.sidebar-button p {
+    margin-left: 8px;
+}
+
+.sidebar-button:focus {
+    background-color: gray;
+}
+
+.sidebar-button:hover {
+    background-color: #ccc;
+}
+
+.orders {
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.order-card:hover {
+    scale: 1.01;
+}
+
+.content {
+    padding: 20px;
+    width: inherit;
+}
+
+.icon {
+    font-size: large;
+}
+
+@media (max-width: 1000px) {
+
+    .order-card {
+        flex-direction: column;
+        align-items: start;
+        justify-content: start;
+    }
+
+}
+
+@media(max-width:900px) {
+    .profile-details {
+        width: 70%;
+    }
+}
+
+@media (max-width: 768px) {
+    .content {
+        padding: 10px;
+    }
+
+    .order-date,
+    .order-total,
+    .order-items {
+        width: 65vw;
+    }
+
+    .sidebar {
+        width: max-content;
+        padding: 5px;
+        position: relative;
+    }
+
+    .sidebar-button {
+        padding: 10px;
+    }
+
+    .sidebar-button p {
+        display: none;
+    }
+
+
+}
+
+@media(max-width:600px) {
+    .profile-details {
+        width: 85%;
+    }
+
+    .profile {
+        align-items: start;
+        justify-content: start;
+    }
+}
+
+
+
+/* orders card */
+.order-card {
+    transition: 200ms !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    border: 1px solid #000;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 10px;
+    background-color: wheat;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.order-card:hover {
+    cursor: pointer;
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
+}
+
+.order-id {
+    font-size: 1.2em;
+    color: #333;
+}
+
+.order-date,
+.order-total,
+.order-items {
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* width: 65vw; */
+    color: black;
+}
+
+.order-items {
+    font-weight: 700;
+}
+
+.order-total {
+    font-weight: normal;
+    color: #000;
+}

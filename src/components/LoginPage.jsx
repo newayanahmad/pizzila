@@ -11,6 +11,8 @@ const LoginPage = () => {
     const [isVerified, setIsVerified] = useState(true)
     const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
 
+    document.title = 'Login | Pizzila'
+
 
 
     const navigation = useNavigate()

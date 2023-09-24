@@ -15,6 +15,8 @@ const ForgetPassword = () => {
     const [message, setMessage] = useState("Please enter your email")
     const [passChanged, setPassChanged] = useState(false)
 
+
+    document.title = 'Reeset Password | Pizzila'
     const navigation = useNavigate()
     const resendOTP = async () => {
         let result = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sendotp`, {

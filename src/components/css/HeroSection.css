@@ -18,6 +18,10 @@
     color: white;
 }
 
+.hero-content h1 {
+    text-wrap: nowrap;
+}
+
 
 .hero-content {
     backdrop-filter: blur(1px);

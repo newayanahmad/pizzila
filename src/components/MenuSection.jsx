@@ -20,6 +20,7 @@ const MenuSection = () => {
     const updateCart = async (pizza, quantity) => {
         if (!isLoggedIn) {
             navigation("login")
+            return
         }
         const existingPizza = cart.find((item) => item._id === pizza._id);
 
@@ -57,6 +58,7 @@ const MenuSection = () => {
     };
 
     useEffect(() => {
+        document.title = 'Pizzila';
         const fetchPizzas = async () => {
             const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getpizzas`, { method: 'GET' });
             const p = await data.json();
@@ -64,6 +66,10 @@ const MenuSection = () => {
         };
         fetchPizzas();
     }, []);
+
+    useEffect(() => {
+        if (!isLoggedIn) setCart([])
+    }, [isLoggedIn])
 
     useEffect(() => {
         const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);

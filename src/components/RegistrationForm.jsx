@@ -10,6 +10,7 @@ const RegistrationForm = () => {
     const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
     const navigation = useNavigate()
     useLayoutEffect(() => {
+        document.title = 'Register | Pizzila'
         if (isLoggedIn) {
             navigation("/")
         }
