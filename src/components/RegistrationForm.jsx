@@ -59,6 +59,7 @@ const RegistrationForm = () => {
             setError(data.message)
         }
         else {
+            setIsLoggedIn(true)
             setIsRegistered(true)
         }
     }
