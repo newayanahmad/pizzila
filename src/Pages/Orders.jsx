@@ -14,7 +14,16 @@ function Orders() {
     // Function to set up the socket and handle the "orders" event
     const setupSocket = () => {
         socket.on("orders", (data) => {
-            console.log(data);
+            console.table(data.order);
+            const newOrder = data.order
+
+            const updatedOrder = orders.map(order => {
+                if (order._id === newOrder._id) {
+                    return newOrder
+                }
+                return order
+            })
+            setOrders(updatedOrder)
         });
         socket.emit("demo", "hello");
     };
@@ -71,7 +80,7 @@ function OrdersComponent() {
             })
             let result = await res.json()
             if (!result.userValid) {
-                navigation('../login')
+                navigation('../admin/login')
             }
         }
         checkUser()
