@@ -36,7 +36,7 @@ const AdminLoginPage = () => {
         if (result.success) {
             localStorage.setItem('token', result.token)
             setIsVerified(true)
-            navigation("../../")
+            navigation("../admin/dashboard")
         }
         else {
             setError(result.message)

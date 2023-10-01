@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-ro
 import AuthContext from '../context/AuthContext';
 import SubtotalContext from "../context/SubtotalContext"
 import OrderIDContext from '../context/OrderIDContext';
+import SocketContext from "../context/SocketContext";
 // changing all the above lazy import to normal imports
 import HomePage from './Pages/HomePage'
 import Cart from './Pages/Cart'
@@ -19,6 +20,10 @@ import OrdersComponent from './Pages/Orders';
 import CartContext from '../context/CartContext'
 import UserProfile from './Pages/UserProfile';
 import Order from './Pages/Order';
+import AdminDashboard from './Pages/AdminDashboard';
+import AdminOrder from './Pages/AdminOrder';
+
+import io from 'socket.io-client';
 
 
 const App = () => {
@@ -27,6 +32,7 @@ const App = () => {
   const [cart, setCart] = useState([]);
   const [orderID, setOrderID] = useState('')
   const [subtotal, setSubtotal] = useState(0);
+  const [socket, setSocket] = useState(null);
 
   useLayoutEffect(() => {
     const checkUser = async () => {
@@ -36,6 +42,17 @@ const App = () => {
       })
       let result = await res.json()
       if (result.userValid) {
+        console.log('Before socket initialization');
+
+        const socket = io(import.meta.env.VITE_BACKEND_URL, {
+          query: {
+            token: localStorage.getItem('token')
+          }
+        })
+        setSocket(socket)
+        console.log('Socket initialized:', socket);
+        socket.emit("demo", "hello from app.jsx")
+
         const d = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-cart-items`, {
           method: 'POST',
           headers: { user: localStorage.getItem('token') }
@@ -51,35 +68,45 @@ const App = () => {
       }
     }
     checkUser()
+    return () => {
+      // Disconnect on unmount or when the user logs out
+      if (socket) {
+        socket.disconnect();
+      }
+    };
   }, [isLoggedIn])
 
   return (
     <BrowserRouter>
       <AuthContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
-        <CartContext.Provider value={[cart, setCart]}>
-          <SubtotalContext.Provider value={[subtotal, setSubtotal]}>
-            <OrderIDContext.Provider value={[orderID, setOrderID]}>
-              <Suspense fallback={<div className='spinner-box'><div className='loader' ></div></div>}>
-                <Nav />
-                <Routes>
-                  <Route path='/' element={<HomePage />} />
-                  <Route path='cart' element={<Cart />} />
-                  <Route path='register' element={<Register />} />
-                  <Route path='login' element={<Login />} />
-                  <Route path='reset-password' element={<ForgetPassword />} />
-                  <Route path='address' element={<Address />} />
-                  <Route path='payment' element={<Payment />} />
-                  <Route path='success' element={<PaymentSuccess />} />
-                  <Route path="dashboard" element={<DashBoard />} />
-                  <Route path='dashboard/orders' element={<OrdersComponent />} />
-                  <Route path='dashboard/orders/:orderID' element={<Order />} />
-                  <Route path='dashboard/profile' element={<UserProfile />} />
-                  <Route path='admin/login' element={<AdminLoginPage />} />
-                </Routes>
-              </Suspense>
-            </OrderIDContext.Provider>
-          </SubtotalContext.Provider>
-        </CartContext.Provider>
+        <SocketContext.Provider value={[socket]}>
+          <CartContext.Provider value={[cart, setCart]}>
+            <SubtotalContext.Provider value={[subtotal, setSubtotal]}>
+              <OrderIDContext.Provider value={[orderID, setOrderID]}>
+                <Suspense fallback={<div className='spinner-box'><div className='loader' ></div></div>}>
+                  <Nav />
+                  <Routes>
+                    <Route path='/' element={<HomePage />} />
+                    <Route path='cart' element={<Cart />} />
+                    <Route path='register' element={<Register />} />
+                    <Route path='login' element={<Login />} />
+                    <Route path='reset-password' element={<ForgetPassword />} />
+                    <Route path='address' element={<Address />} />
+                    <Route path='payment' element={<Payment />} />
+                    <Route path='success' element={<PaymentSuccess />} />
+                    <Route path="dashboard" element={<DashBoard />} />
+                    <Route path='dashboard/orders' element={<OrdersComponent />} />
+                    <Route path='dashboard/orders/:orderID' element={<Order />} />
+                    <Route path='dashboard/profile' element={<UserProfile />} />
+                    <Route path='admin/login' element={<AdminLoginPage />} />
+                    <Route path='admin/dashboard' element={<AdminDashboard />} />
+                    <Route path='admin/dashboard/:orderID' element={<AdminOrder />} />
+                  </Routes>
+                </Suspense>
+              </OrderIDContext.Provider>
+            </SubtotalContext.Provider>
+          </CartContext.Provider>
+        </SocketContext.Provider>
       </AuthContext.Provider>
     </BrowserRouter>
   )

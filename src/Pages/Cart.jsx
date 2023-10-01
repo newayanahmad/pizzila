@@ -81,37 +81,40 @@ const Cart = () => {
     }
         ;
     return (
-        <div className="cart">
-            <h2>Your Cart</h2>
-            {cart.length === 0 ? (
-                <p>Your cart is empty.</p>
-            ) : (
-                <>
-                    {cart.map((item) => (
-                        <CartItem key={item._id} item={item} updateQuantity={updateQuantity} />
-                    ))}
-                    <hr />
-                    <div className="cart-total">
-                        <p>Amount:</p>
-                        <p>{total.toFixed(2)}</p>
-                    </div>
-                    <div className="cart-total">
-                        <p>Taxes:</p>
-                        <p>{parseInt((total * 0.08).toFixed(2)).toFixed(2)}</p>
-                    </div>
-                    <div className="cart-total">
-                        <p>Delivery Charges:</p>
-                        <p>{total >= 500 ? "Free Delivery" : <>{49.0.toFixed(2)}</>}</p>
-                    </div>
-                    <div className="cart-total">
-                        <h4>Total:</h4>
-                        <h4>₹{parseInt(subtotal).toFixed(2)}</h4>
-                    </div>
-                    <hr />
+        <div className="cart-box">
+            <div className="cart">
+                <h2>Your Cart</h2>
+                {cart.length === 0 ? (
+                    <p>Your cart is empty.</p>
+                ) : (
+                    <>
+                        {cart.map((item) => (
+                            <CartItem key={item._id} item={item} updateQuantity={updateQuantity} />
+                        ))}
+                        <hr />
+                        <div className="cart-total">
+                            <p>Amount:</p>
+                            <p>{total.toFixed(2)}</p>
 
-                    <button className="checkout-button" onClick={() => navigation("../address")}>Checkout</button>
-                </>
-            )}
+                        </div>
+                        <div className="cart-total">
+                            <p>Taxes:</p>
+                            <p>{parseInt((total * 0.08).toFixed(2)).toFixed(2)}</p>
+                        </div>
+                        <div className="cart-total">
+                            <p>Delivery Charges:</p>
+                            <p>{total >= 500 ? "Free Delivery" : <>{49.0.toFixed(2)}</>}</p>
+                        </div>
+                        <div className="cart-total">
+                            <h4>Total:</h4>
+                            <h4>₹{parseInt(subtotal).toFixed(2)}</h4>
+                        </div>
+                        <hr />
+
+                        <button className="checkout-button" onClick={() => navigation("../address")}>Checkout</button>
+                    </>
+                )}
+            </div>
         </div>
     );
 };

@@ -4,18 +4,29 @@ import { GiFullPizza } from 'react-icons/gi'
 import { FaUserAlt } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
+import SocketContext from '../../context/SocketContext';
 
 function Orders() {
+    const [socket] = useContext(SocketContext);
     const navigation = useNavigate()
     const [orders, setOrders] = useState([])
+
+    // Function to set up the socket and handle the "orders" event
+    const setupSocket = () => {
+        socket.on("orders", (data) => {
+            console.log(data);
+        });
+        socket.emit("demo", "hello");
+    };
     useEffect(() => {
-        const fetchOrders = async (req, res) => {
+        const fetchOrders = async () => {
             const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-orders`, {
                 method: 'POST',
                 headers: { user: localStorage.getItem('token') }
             })
             const data = await r.json()
             setOrders(data)
+            setupSocket()
         }
         fetchOrders()
     }, [])

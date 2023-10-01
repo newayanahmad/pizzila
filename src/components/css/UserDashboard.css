@@ -85,13 +85,15 @@
     height: 80vh;
 }
 
-.order-card:hover {
+/* .order-card:hover {
     scale: 1.01;
-}
+} */
 
 .content {
     padding: 20px;
     width: inherit;
+    /* position: fixed; */
+    overflow: hidden;
 }
 
 .icon {
