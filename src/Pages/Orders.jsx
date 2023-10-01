@@ -16,14 +16,16 @@ function Orders() {
         socket.on("orders", (data) => {
             console.table(data.order);
             const newOrder = data.order
-
-            const updatedOrder = orders.map(order => {
-                if (order._id === newOrder._id) {
-                    return newOrder
-                }
-                return order
+            console.log(orders.length)
+            setOrders((prev) => {
+                return prev.map(order => {
+                    if (order._id === newOrder._id) {
+                        return newOrder
+                    }
+                    console.log("id matched");
+                    return order
+                })
             })
-            setOrders(updatedOrder)
         });
         socket.emit("demo", "hello");
     };
