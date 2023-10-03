@@ -115,7 +115,7 @@ const MenuSection = () => {
                 <div className="pizzas">
                     {pizzas.map((pizza) => (
                         <div key={pizza._id} className="pizza">
-                            <img src={pizza.image} alt={pizza.name} />
+                            <img src={pizza.image.startsWith('/') == '/' || pizza.image.startsWith("http") ? pizza.image : '/' + pizza.image} alt={pizza.name} />
                             <div className="">
                                 <div className="pizza-info">
                                     <h4>{pizza.name}</h4>

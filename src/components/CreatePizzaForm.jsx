@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './css/CreatePizzaForm.css'; // Import the CSS file
 
 const CreatePizzaForm = () => {
+
+    const navigation = useNavigate()
 
     const [name, setName] = useState("")
     const [description, setDescription] = useState("")
@@ -37,35 +40,50 @@ const CreatePizzaForm = () => {
         }
         fetchOptions()
     }, [])
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
 
-    const handleIngredientChange = (e, category) => {
-        const { value, checked } = e.target;
-        const updatedIngredients = { ...formData.ingredients };
-        if (checked) {
-            updatedIngredients[category].push(value);
-        } else {
-            updatedIngredients[category] = updatedIngredients[category].filter(
-                (ingredient) => ingredient !== value
-            );
-        }
-        setFormData({
-            ...formData,
-            ingredients: updatedIngredients,
-        });
-    };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        const pizza = {
+            name,
+            image,
+            description,
+            price: Number(price),
+            category,
+            ingredients: {
+                base: [selectedBase],
+                sauce: [selectedSauce],
+                cheese: [selectedCheese],
+                veggies: selectedVeggies
+            }
+        }
+        const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/create-pizza`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                token: localStorage.getItem('token')
+            },
+            body: JSON.stringify({ pizza: pizza })
+        })
+        const result = await r.json()
+        if (result.success) {
+            setName("")
+            setDescription("")
+            setPrice("")
+            setImage("")
+            setCategory("")
+            setSelectedBase(null)
+            setSelectedSauce(null)
+            setSelectedCheese(null)
+            setSelectedVeggies([])
+            navigation("../")
+        }
+        else {
+            alert("Failed to create pizza. Try again")
+        }
 
         // Print the form data (you can send it to an API or process it as needed)
-        console.log(formData);
+
     };
 
     return (<>

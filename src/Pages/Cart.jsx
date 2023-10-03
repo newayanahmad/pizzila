@@ -6,7 +6,7 @@ import SubtotalContext from '../../context/SubtotalContext';
 
 const CartItem = ({ item, updateQuantity }) => (
     <div className="cart-item">
-        <img src={item.image} alt={item.name} />
+        <img src={item.image.startsWith('/') == '/' || item.image.startsWith("http") ? item.image : '/' + item.image} alt={item.name} />
         <div className="cart-item-info">
             <h4>{item.name}</h4>
             <p>{item.price.toFixed(2) + ' x ' + item.quantity} {'='} ₹{(item.price * item.quantity).toFixed(2)}</p>

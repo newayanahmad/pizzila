@@ -63,7 +63,7 @@ const Order = () => {
 
 const Item = ({ item, key }) => (
     <div className="cart-item" style={{ marginTop: '3px' }} key={key}>
-        <img src={"/" + item.image} alt={item.name} />
+        <img src={item.image.startsWith('/') == '/' || item.image.startsWith("http") ? item.image : '/' + item.image} alt={item.name} />
         <div className="cart-item-info">
             <h4>{item.name}</h4>
             <p>{item.price.toFixed(2) + ' x ' + item.quantity} {'='} ₹{(item.price * item.quantity).toFixed(2)}</p>
