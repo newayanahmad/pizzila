@@ -7,10 +7,10 @@ import AuthContext from '../../context/AuthContext';
 import SocketContext from '../../context/SocketContext';
 
 function Orders() {
-    const [socket] = useContext(SocketContext);
     const navigation = useNavigate()
     const [orders, setOrders] = useState([])
 
+    const [socket] = useContext(SocketContext);
     // Function to set up the socket and handle the "orders" event
     const setupSocket = () => {
         socket.on("orders", (data) => {

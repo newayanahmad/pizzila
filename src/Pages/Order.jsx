@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import "../components/css/Order.css"
 import AuthContext from '../../context/AuthContext'
+import SocketContext from '../../context/SocketContext'
 
 const Order = () => {
     const [orderId, setOrderID] = useState("")
@@ -10,6 +11,20 @@ const Order = () => {
     const [isLoggedIn] = useContext(AuthContext)
     const navigation = useNavigate()
 
+    const [socket] = useContext(SocketContext);
+    // Function to set up the socket and handle the "orders" event
+    const setupSocket = () => {
+        socket.on("orders", (data) => {
+            console.table(data.order);
+            const newOrder = data.order
+            setOrder((prev) => {
+                if (order && newOrder._id == order._id) {
+                    return newOrder
+                }
+                return prev
+            })
+        });
+    };
 
     useEffect(() => {
         const checkUser = async () => {
@@ -21,6 +36,7 @@ const Order = () => {
             if (!result.userValid) {
                 navigation('../login')
             }
+            setupSocket()
         }
         checkUser()
     }, [isLoggedIn])

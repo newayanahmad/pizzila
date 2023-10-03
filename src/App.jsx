@@ -16,6 +16,7 @@ import Address from './components/Address'
 const Payment = lazy(() => import('./Pages/Payment'))
 const PaymentSuccess = lazy(() => import('./Pages/PaymentSuccess'))
 import OrdersComponent from './Pages/Orders';
+import CreatePizzaForm from './components/CreatePizzaForm'
 
 import CartContext from '../context/CartContext'
 import UserProfile from './Pages/UserProfile';
@@ -100,6 +101,7 @@ const App = () => {
                     <Route path='dashboard/profile' element={<UserProfile />} />
                     <Route path='admin/login' element={<AdminLoginPage />} />
                     <Route path='admin/dashboard' element={<AdminDashboard />} />
+                    <Route path='admin/dashboard/create-pizza' element={<CreatePizzaForm />} />
                     <Route path='admin/dashboard/:orderID' element={<AdminOrder />} />
                   </Routes>
                 </Suspense>

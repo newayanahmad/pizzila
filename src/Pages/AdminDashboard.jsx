@@ -1,13 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../components/css/UserDashboard.css';
 import { GiFullPizza } from 'react-icons/gi'
 import { FaBoxOpen } from 'react-icons/fa'
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import SocketContext from '../../context/SocketContext';
 
 // ... Orders and Inventory components ...
 function Orders() {
     const [orders, setOrders] = useState([])
     const navigation = useNavigate()
+
+    const [socket] = useContext(SocketContext);
+    // Function to set up the socket and handle the "orders" event
+    const setupSocket = () => {
+        socket.on("AdminOrders", (data) => {
+            console.table(data.order);
+            const newOrder = data.order
+            // console.log(orders.length)
+            console.log(data.isUpdate);
+            if (data.isUpdate) {
+                setOrders((prev) => {
+                    return prev.map(order => {
+                        if (order._id === newOrder._id) {
+                            return newOrder
+                        }
+                        return order
+                    })
+                })
+            }
+            else {
+                setOrders((prev) => {
+                    return [newOrder, ...prev]
+                })
+            }
+        });
+    };
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -18,6 +45,7 @@ function Orders() {
             const data = await r.json()
             if (!data.success) navigation("../admin/login")
             setOrders(data.orders)
+            setupSocket()
         }
         fetchOrders()
     }, [])
@@ -51,6 +79,12 @@ function Orders() {
 
 function Inventory() {
     const [inventory, setInventory] = useState([])
+    const [socket] = useContext(SocketContext)
+    const setupSocket = () => {
+        socket.on('inventory', (data) => {
+            setInventory(data.inventory)
+        })
+    }
 
     useEffect(() => {
         const fetchInventory = async () => {
@@ -59,6 +93,7 @@ function Inventory() {
             })
             const data = await r.json()
             setInventory(data)
+            setupSocket()
         }
         fetchInventory()
     }, [])
@@ -121,6 +156,7 @@ function AdminDashboard() {
             <div className="sidebar">
                 <button className="sidebar-button" onClick={() => navigation('../admin/dashboard')}><GiFullPizza className='icon' /><p>Orders</p></button>
                 <button className="sidebar-button" onClick={() => navigation('../admin/dashboard?section=inventory')}><FaBoxOpen className='icon' /><p>Inventory</p></button>
+                <button className="sidebar-button" style={{ whiteSpace: 'normal' }} onClick={() => navigation('../admin/dashboard/create-pizza')}><FaBoxOpen className='icon' /><p >Add Pizza</p></button>
             </div>
             <div className="content">
                 {section === 'inventory' ? <Inventory /> : <Orders />}

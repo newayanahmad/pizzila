@@ -4,6 +4,7 @@ import Modal from 'react-modal'; // Import the react-modal library
 import AuthContext from '../../context/AuthContext';
 import CartContext from '../../context/CartContext'
 import { useNavigate } from 'react-router-dom'
+import CustomPizza from './CustomPizza';
 
 const MenuSection = () => {
     const [pizzas, setPizzas] = useState([]);
@@ -87,6 +88,26 @@ const MenuSection = () => {
         document.body.style.overflow = 'auto'; // Allow background scrolling when the modal is closed
     };
 
+    const handleCustom = async (pizza) => {
+        const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/custom-pizza`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ingredients: pizza })
+        });
+        const response = await r.json();
+        if (response.success) {
+
+            await updateCart(response.pizza)
+        }
+        else {
+            alert("Something went wrong! Please try again")
+        }
+        console.log(response);
+
+    }
+
     return (
         <div className="menu">
             <div className="menu-container">
@@ -121,6 +142,7 @@ const MenuSection = () => {
                         </div>
 
                     ))}
+                    <CustomPizza addToCart={handleCustom} />
                     {cartSubtotal != 0 &&
                         <div className="cart-bar" style={{ display: showCart ? 'flex' : 'none' }}>
                             <div className="cart-info">
