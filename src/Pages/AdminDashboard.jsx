@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import '../components/css/UserDashboard.css';
 import { GiFullPizza } from 'react-icons/gi'
-import { FaBoxOpen } from 'react-icons/fa'
+import { FaBoxOpen, FaPizzaSlice } from 'react-icons/fa'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SocketContext from '../../context/SocketContext';
+import Modal from 'react-modal'
 
 // ... Orders and Inventory components ...
 function Orders() {
@@ -131,6 +132,125 @@ function Inventory() {
     );
 }
 
+
+const PizzaList = () => {
+    const navigation = useNavigate()
+    const [pizzas, setPizzas] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const [currentPizza, setCurrentPizza] = useState(null);
+    useEffect(() => {
+        document.title = 'Pizza | Pizzila';
+        const fetchPizzas = async () => {
+            const data = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getpizzas`, { method: 'GET' });
+            const p = await data.json();
+            setPizzas(p);
+        };
+        fetchPizzas();
+    }, []);
+    const openModal = (pizza) => {
+        setCurrentPizza(pizza);
+        setModalIsOpen(true);
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    };
+
+    const closeModal = () => {
+        setModalIsOpen(false);
+        document.body.style.overflow = 'auto'; // Allow background scrolling when the modal is closed
+    };
+
+    const removePizza = async (pizza) => {
+        const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/remove-pizza`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                token: localStorage.getItem('token')
+            },
+            body: JSON.stringify({ pizzaID: pizza._id })
+        });
+        const data = await r.json()
+        if (data.success) {
+            setPizzas(prev => prev.filter(p => p._id !== pizza._id))
+        }
+        else {
+            alert("Failed to remove pizza")
+        }
+    }
+
+    return (<><h2>Admin Dashboard</h2> <hr />
+        <h3 >Pizza</h3>
+        <center className='center' onClick={() => navigation("create-pizza")} style={{ position: 'absolute', top: '75vh', zIndex: '2' }}><button className='add-pizza' >Add Pizza +</button></center>
+        <div className="pizzas orders">
+            {pizzas && pizzas.map((pizza) => (
+                <div key={pizza._id} className="pizza" style={{ marginTop: '0' }}>
+                    <img src={pizza.image.startsWith('/') == '/' || pizza.image.startsWith("http") ? pizza.image : '/' + pizza.image} alt={pizza.name} />
+                    <div className="">
+                        <div className="pizza-info">
+                            <h4>{pizza.name}</h4>
+                            <p>₹{pizza.price.toFixed(2)}</p>
+                            <p style={{ color: 'gray', fontSize: 'small' }}>
+                                {pizza.description.slice(0, 40)}...
+                                <span onClick={() => openModal(pizza)} className="read-more" style={{ color: '#000' }}>Read More</span>
+                            </p>
+                        </div>
+                        <button className="add-button" style={{ whiteSpace: 'nowrap', fontSize: 'small', backgroundColor: 'red', color: 'white' }} onClick={() => removePizza(pizza)} >
+                            Remove
+                        </button>
+
+                    </div>
+                </div>
+
+            ))}
+            <br />
+            <br />
+            <br />
+        </div>
+        <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Pizza Details"
+            style={{
+                overlay: {
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Semi-transparent background
+                },
+                content: {
+                    maxHeight: 'max-content',
+                    maxWidth: '600px',
+                    // width: '700px',
+                    margin: 'auto',
+                    backgroundColor: 'white',
+                    borderRadius: '8px',
+                    padding: '10px',
+                    fontSize: '1rem', // Base font size
+                }
+            }}
+            ariaHideApp={false} // Disable ariaHideApp
+        >
+            {currentPizza && (
+                <>
+                    <button onClick={closeModal} style={{ position: 'absolute', borderRadius: '10px', right: 10, top: 10 }}>X</button>
+                    <h4 style={{ fontSize: '1.2rem' }}>{currentPizza.name}</h4> {/* Larger font size for the title */}
+                    <p style={{ fontSize: '1rem', fontWeight: 'bold' }}>₹{currentPizza.price.toFixed(2)}</p> {/* Larger font size and bold for the price */}
+                    <p>{currentPizza.description}</p>
+                    <p>Category: {currentPizza.category}</p>
+                    <div>
+                        <h4 style={{ textDecoration: 'underline' }}>Ingredients:</h4> {/* Underline for the section title */}
+                        {currentPizza.ingredients.base.length > 0 && <p>Base: {currentPizza.ingredients.base.join(', ')}</p>}
+                        {currentPizza.ingredients.sauce.length > 0 && <p>Sauce: {currentPizza.ingredients.sauce.join(', ')}</p>}
+                        {currentPizza.ingredients.cheese.length > 0 && <p>Cheese: {currentPizza.ingredients.cheese.join(', ')}</p>}
+                        {currentPizza.ingredients.veggies.length > 0 && <p>Veggies: {currentPizza.ingredients.veggies.join(', ')}</p>}
+                    </div>
+                </>
+            )}
+        </Modal>
+    </>
+
+    )
+}
+
+
 function AdminDashboard() {
     const navigation = useNavigate()
     const [queryParameters] = useSearchParams()
@@ -154,12 +274,12 @@ function AdminDashboard() {
     return (<>
         <div className="app">
             <div className="sidebar">
-                <button className="sidebar-button" onClick={() => navigation('../admin/dashboard')}><GiFullPizza className='icon' /><p>Orders</p></button>
+                <button className="sidebar-button" onClick={() => navigation('../admin/dashboard')}><FaPizzaSlice className='icon' /><p>Orders</p></button>
                 <button className="sidebar-button" onClick={() => navigation('../admin/dashboard?section=inventory')}><FaBoxOpen className='icon' /><p>Inventory</p></button>
-                <button className="sidebar-button" style={{ whiteSpace: 'normal' }} onClick={() => navigation('../admin/dashboard/create-pizza')}><FaBoxOpen className='icon' /><p >Add Pizza</p></button>
+                <button className="sidebar-button" style={{ whiteSpace: 'normal' }} onClick={() => navigation('../admin/dashboard?section=pizza')}><GiFullPizza className='icon' /><p style={{ whiteSpace: 'nowrap' }}>Pizza</p></button>
             </div>
             <div className="content">
-                {section === 'inventory' ? <Inventory /> : <Orders />}
+                {section === 'inventory' ? <Inventory /> : (section === 'pizza' ? <div style={{ overflow: 'hidden' }}><PizzaList /></div> : <Orders />)}
             </div>
         </div>
     </>
