@@ -33,10 +33,6 @@ const CreatePizzaForm = () => {
             setSauceOptions(options.filter(option => option.category === 'sauce'));
             setCheeseOptions(options.filter(option => option.category === 'cheese'));
             setVeggieOptions(options.filter(option => option.category === 'veggies'));
-            console.log(veggieOptions)
-            console.log(baseOptions);
-            console.log(veggieOptions.map(option => option.ingredient))
-
         }
         fetchOptions()
     }, [])

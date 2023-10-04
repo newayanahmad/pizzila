@@ -17,8 +17,6 @@ function Orders() {
         socket.on("AdminOrders", (data) => {
             console.table(data.order);
             const newOrder = data.order
-            // console.log(orders.length)
-            console.log(data.isUpdate);
             if (data.isUpdate) {
                 setOrders((prev) => {
                     return prev.map(order => {
@@ -255,7 +253,6 @@ function AdminDashboard() {
     const navigation = useNavigate()
     const [queryParameters] = useSearchParams()
     let section = queryParameters.get('section')
-    console.log(section);
 
     useEffect(() => {
         const checkAdmin = async () => {

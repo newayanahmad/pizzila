@@ -25,9 +25,6 @@ const CustomPizza = ({ addToCart }) => {
             setSauceOptions(options.filter(option => option.category === 'sauce'));
             setCheeseOptions(options.filter(option => option.category === 'cheese'));
             setVeggieOptions(options.filter(option => option.category === 'veggies'));
-            console.log(veggieOptions)
-            console.log(veggieOptions.map(option => option.ingredient))
-
         }
         fetchOptions()
     }, [])

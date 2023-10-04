@@ -43,15 +43,12 @@ const App = () => {
       })
       let result = await res.json()
       if (result.userValid) {
-        console.log('Before socket initialization');
-
         const socket = io(import.meta.env.VITE_BACKEND_URL, {
           query: {
             token: localStorage.getItem('token')
           }
         })
         setSocket(socket)
-        console.log('Socket initialized:', socket);
         socket.emit("demo", "hello from app.jsx")
 
         const d = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-cart-items`, {

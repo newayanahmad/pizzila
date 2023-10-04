@@ -104,8 +104,6 @@ const MenuSection = () => {
         else {
             alert("Something went wrong! Please try again")
         }
-        console.log(response);
-
     }
 
     return (

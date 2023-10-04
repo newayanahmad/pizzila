@@ -17,7 +17,6 @@ const AdminOrder = () => {
         socket.on("AdminOrders", (data) => {
             console.table(data.order);
             const newOrder = data.order
-            console.log("prev order", order)
             setOrder((prev) => {
                 if (order && newOrder._id == order._id) {
                     return newOrder
@@ -86,7 +85,6 @@ const OrderComponent = ({ order, user }) => {
             body: JSON.stringify({ orderId: order._id, newStatus: e.target.value })
         })
         const data = await r.json()
-        console.log(data);
 
     }
     return (
