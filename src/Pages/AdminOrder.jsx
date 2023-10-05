@@ -12,6 +12,22 @@ const AdminOrder = () => {
     const [user, setUser] = useState(null)
     const navigation = useNavigate()
     const [socket] = useContext(SocketContext);
+
+    useEffect(() => {
+        const checkAdmin = async () => {
+            if (!localStorage.getItem('token')) return navigation('../admin/login')
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyadmin`, {
+                method: 'POST',
+                headers: { token: localStorage.getItem('token') }
+            })
+            let result = await res.json()
+            if (!result.success) {
+                navigation('../admin/login')
+            }
+        }
+        checkAdmin()
+    }, [isLoggedIn])
+
     // Function to set up the socket and handle the "orders" event
     const setupSocket = () => {
         socket.on("AdminOrders", (data) => {
@@ -26,21 +42,6 @@ const AdminOrder = () => {
         });
     };
 
-
-    useEffect(() => {
-        const checkUser = async () => {
-            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyuser`, {
-                method: 'POST',
-                headers: { token: localStorage.getItem('token') }
-            })
-            let result = await res.json()
-            if (!result.userValid) {
-                navigation('../login')
-            }
-            setupSocket()
-        }
-        checkUser()
-    }, [isLoggedIn])
     useLayoutEffect(() => {
         setOrderID(orderID)
         const fetchOrder = async () => {

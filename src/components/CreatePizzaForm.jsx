@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/CreatePizzaForm.css'; // Import the CSS file
+import AuthContext from '../../context/AuthContext';
 
 const CreatePizzaForm = () => {
 
@@ -22,6 +23,24 @@ const CreatePizzaForm = () => {
     const [sauceOptions, setSauceOptions] = useState([])
     const [cheeseOptions, setCheeseOptions] = useState([])
     const [veggieOptions, setVeggieOptions] = useState([])
+
+    const [isLoggedIn] = useContext(AuthContext)
+
+    useEffect(() => {
+        const checkAdmin = async () => {
+            if (!localStorage.getItem('token')) return navigation('../admin/login')
+            let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyadmin`, {
+                method: 'POST',
+                headers: { token: localStorage.getItem('token') }
+            })
+            let result = await res.json()
+            if (!result.success) {
+                navigation('../admin/login')
+            }
+        }
+        checkAdmin()
+    }, [isLoggedIn])
+
 
     useEffect(() => {
         const fetchOptions = async () => {

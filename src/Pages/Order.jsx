@@ -43,6 +43,7 @@ const Order = () => {
     useLayoutEffect(() => {
         setOrderID(orderID)
         const fetchOrder = async () => {
+            if (!localStorage.getItem('token')) return navigation('../login')
             const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/get-orders`, {
                 method: 'POST',
                 headers: { user: localStorage.getItem('token'), 'content-type': 'application/json' },

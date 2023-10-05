@@ -5,6 +5,7 @@ import { FaBoxOpen, FaPizzaSlice } from 'react-icons/fa'
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import SocketContext from '../../context/SocketContext';
 import Modal from 'react-modal'
+import AuthContext from '../../context/AuthContext';
 
 // ... Orders and Inventory components ...
 function Orders() {
@@ -37,6 +38,7 @@ function Orders() {
 
     useEffect(() => {
         const fetchOrders = async () => {
+            if (!localStorage.getItem('token')) navigation('../admin/login')
             const r = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/getorders`, {
                 method: 'POST',
                 headers: { user: localStorage.getItem('token') }
@@ -247,15 +249,16 @@ const PizzaList = () => {
 
     )
 }
-
-
+P
 function AdminDashboard() {
-    const navigation = useNavigate()
     const [queryParameters] = useSearchParams()
     let section = queryParameters.get('section')
+    const navigation = useNavigate()
+    const [isLoggedIn] = useContext(AuthContext)
 
     useEffect(() => {
         const checkAdmin = async () => {
+            if (!localStorage.getItem('token')) return navigation('../admin/login')
             let res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verifyadmin`, {
                 method: 'POST',
                 headers: { token: localStorage.getItem('token') }
@@ -266,7 +269,7 @@ function AdminDashboard() {
             }
         }
         checkAdmin()
-    }, [])
+    }, [isLoggedIn])
 
     return (<>
         <div className="app">

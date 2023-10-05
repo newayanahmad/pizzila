@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './css/RegistrationForm.css'
 import './css/AdminLogin.css'
 import { Link, useNavigate } from 'react-router-dom'
+import AuthContext from '../../context/AuthContext'
 
 const AdminLoginPage = () => {
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext)
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -14,7 +16,6 @@ const AdminLoginPage = () => {
     const back = () => {
         setIsVerified(true)
     }
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (email === "" || password === "") {
@@ -36,6 +37,7 @@ const AdminLoginPage = () => {
         if (result.success) {
             localStorage.setItem('token', result.token)
             setIsVerified(true)
+            setIsLoggedIn(true)
             navigation("../admin/dashboard")
         }
         else {
