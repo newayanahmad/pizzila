@@ -249,7 +249,7 @@ const PizzaList = () => {
 
     )
 }
-P
+
 function AdminDashboard() {
     const [queryParameters] = useSearchParams()
     let section = queryParameters.get('section')
